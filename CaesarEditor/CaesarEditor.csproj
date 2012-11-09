@@ -67,11 +67,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\Edit\CopyCommand.cs" />
+    <Compile Include="Commands\Edit\CutCommand.cs" />
+    <Compile Include="Commands\Edit\DeleteCommand.cs" />
+    <Compile Include="Commands\File\ExitCommand.cs" />
     <Compile Include="Commands\ExportCommandAttribute.cs" />
+    <Compile Include="Commands\Edit\FindCommand.cs" />
     <Compile Include="Commands\ICommandEx.cs" />
-    <Compile Include="Commands\NewCommand.cs" />
-    <Compile Include="Commands\OpenCommand.cs" />
+    <Compile Include="Commands\File\NewCommand.cs" />
+    <Compile Include="Commands\File\OpenCommand.cs" />
+    <Compile Include="Commands\Edit\PasteCommand.cs" />
+    <Compile Include="Commands\Edit\RedoCommand.cs" />
+    <Compile Include="Commands\File\SaveAsCommand.cs" />
+    <Compile Include="Commands\File\SaveCommand.cs" />
+    <Compile Include="Commands\Edit\UndoCommand.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

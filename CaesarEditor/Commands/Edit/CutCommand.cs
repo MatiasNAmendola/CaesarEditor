@@ -1,21 +1,21 @@
 ﻿/*****************************************************************
- * File name: ExitCommand.cs
+ * File name: CutCommand.cs
  * Description:
  * Author: Paboo
  * Homepage: http://www.paboo.cn/
- * Date Created: 11/7/2012 00:00:00 AM
- * Date Updated: 11/7/2012 00:00:00 AM
+ * Date Created: 11/9/2012 10:09:18 AM
+ * Date Updated: 11/9/2012 10:09:18 AM
  *****************************************************************/
 namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Exit", Top = "_File", Category = "Exit", Order = 9999)]
-    sealed class ExitCommand : ICommandEx
+    [ExportMainMenuCommand(Icon = "", Header = "Cu_t", Top = "_Edit", Category = "Cut", Order = 203)]
+    public class CutCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Exit", typeof(ExitCommand), new InputGestureCollection
+        private ICommand command = new RoutedUICommand(string.Empty, "Cut", typeof(CutCommand), new InputGestureCollection
         {
-            new KeyGesture(Key.F4, ModifierKeys.Alt)
+            new KeyGesture(Key.X, ModifierKeys.Control)
         });
 
         public ICommand Command
@@ -25,7 +25,7 @@ namespace CaesarEditor.Commands
 
         private ExecutedRoutedEventHandler executed = (s, e) =>
         {
-            MainWindow.Instance.ExitCommandExecuted(s, e);
+            MainWindow.Instance.CutCommandExecuted(s, e);
         };
 
         public ExecutedRoutedEventHandler Executed

@@ -439,7 +439,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Highlighting\Resources\CSS-Mode.xshd" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Highlighting\Resources\ILAsm-Mode.xshd" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Search\next.png" />
     <Resource Include="Search\prev.png" />

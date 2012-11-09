@@ -41,6 +41,7 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 			                                 ".booproj;.build;.xfrm;.targets;.xaml;.xpt;" +
 			                                 ".xft;.map;.wsdl;.disco").Split(';'),
 			                         "XML-Mode.xshd");
+			hlm.RegisterHighlighting("ILAsm", new[] { ".il" }, "ILAsm-Mode.xshd");
 		}
 	}
 }
