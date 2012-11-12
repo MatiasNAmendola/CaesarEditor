@@ -1,26 +1,30 @@
 ﻿/*****************************************************************
- * File name: NewCommand.cs
+ * File name: AboutCommand.cs
  * Description:
  * Author: Paboo
  * Homepage: http://www.paboo.cn/
- * Date Created: 11/8/2012 11:25:37 AM
- * Date Updated: 11/8/2012 11:25:37 AM
+ * Date Created: 11/12/2012 1:48:08 PM
+ * Date Updated: 11/12/2012 1:48:08 PM
  *****************************************************************/
 namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_New", Top = "_File", Category = "New", Order = 101)]
-    sealed class NewCommand : ICommandEx
+    [ExportMainMenuCommand(Icon = "", Header = "_About", Top = "_Help", Category = "Help", Order = 9999)]
+    sealed class AboutCommand : ICommandEx
     {
+        private ICommand command = new RoutedUICommand(string.Empty, "About", typeof(AboutCommand), new InputGestureCollection
+        {
+        });
+
         public ICommand Command
         {
-            get { return ApplicationCommands.New; }
+            get { return command; }
         }
 
         private ExecutedRoutedEventHandler executed = (s, e) =>
         {
-            MainWindow.Instance.NewCommandExecuted(s, e);
+            MainWindow.Instance.AboutCommandExecuted(s, e);
         };
 
         public ExecutedRoutedEventHandler Executed

@@ -1,21 +1,20 @@
 ﻿/*****************************************************************
- * File name: ExitCommand.cs
+ * File name: LineNumberCommand.cs
  * Description:
  * Author: Paboo
  * Homepage: http://www.paboo.cn/
- * Date Created: 11/7/2012 00:00:00 AM
- * Date Updated: 11/7/2012 00:00:00 AM
+ * Date Created: 11/12/2012 1:00:15 PM
+ * Date Updated: 11/12/2012 1:00:15 PM
  *****************************************************************/
 namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "E_xit", Top = "_File", Category = "Exit", Order = 199)]
-    sealed class ExitCommand : ICommandEx
+    [ExportMainMenuCommand(Icon = "", Header = "_Line Number", IsCheckable = true, Top = "_Format", Category = "LineNumber", Order = 301)]
+    sealed class LineNumberCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Exit", typeof(ExitCommand), new InputGestureCollection
+        private ICommand command = new RoutedUICommand(string.Empty, "LineNumber", typeof(LineNumberCommand), new InputGestureCollection
         {
-            new KeyGesture(Key.F4, ModifierKeys.Alt)
         });
 
         public ICommand Command
@@ -25,7 +24,7 @@ namespace CaesarEditor.Commands
 
         private ExecutedRoutedEventHandler executed = (s, e) =>
         {
-            MainWindow.Instance.ExitCommandExecuted(s, e);
+            MainWindow.Instance.LineNumberCommandExecuted(s, e);
         };
 
         public ExecutedRoutedEventHandler Executed

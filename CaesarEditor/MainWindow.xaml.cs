@@ -16,6 +16,8 @@
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string currentFileName;
+
         private static MainWindow instance;
 
         public static MainWindow Instance
@@ -59,9 +61,14 @@
                         {
                         }
                         menuItem.Header = entry.Metadata.Header;
+                        menuItem.IsCheckable = entry.Metadata.IsCheckable;
+                        menuItem.IsChecked = entry.Metadata.IsChecked;
                         menuItem.IsEnabled = entry.Metadata.IsEnabled;
                         menuItem.Command = entry.Value.Command;
-                        CommandBindings.Add(new CommandBinding(menuItem.Command, entry.Value.Executed));
+                        if (entry.Value.Executed != null)
+                        {
+                            CommandBindings.Add(new CommandBinding(menuItem.Command, entry.Value.Executed));
+                        }
                         topMenuItem.Items.Add(menuItem);
                     }
                 }
@@ -71,12 +78,18 @@
         #region /// <summary> Main menu "File" </summary>
         public void NewCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            NewDocument();
+            if (PrepareClosing())
+            {
+                NewDocument();
+            }
         }
 
         public void OpenCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            OpenDocument();
+            if (PrepareClosing())
+            {
+                OpenDocument();
+            }
         }
 
         public void SaveCommandExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -96,36 +109,6 @@
         #endregion
 
         #region /// <summary> Main menu "Edit" </summary>
-        public void UndoCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Undo");
-        }
-
-        public void RedoCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Redo");
-        }
-
-        public void CutCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Cut");
-        }
-
-        public void CopyCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Copy");
-        }
-
-        public void PasteCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Paste");
-        }
-
-        public void DeleteCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Delete");
-        }
-
         public void FindCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("Find");
@@ -140,29 +123,22 @@
         {
             MessageBox.Show("Goto");
         }
-
-        public void SelectAllCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("SelectAll");
-        }
-
-        public void DateTimeCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("DateTime");
-        }
         #endregion
 
         #region /// <summary> Main menu "Format" </summary>
         public void LineNumberCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            textEditor.ShowLineNumbers = !textEditor.ShowLineNumbers;
         }
 
         public void WordWrapCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            textEditor.WordWrap = !textEditor.WordWrap;
         }
 
         public void FontCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            MessageBox.Show("Font");
         }
         #endregion
 
@@ -170,25 +146,34 @@
         #endregion
 
         #region /// <summary> Main menu "Help" </summary>
+        public void HelpCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            MessageBox.Show("Help");
+        }
+
         public void AboutCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
+            MessageBox.Show("About");
         }
         #endregion
 
         private bool NewDocument()
         {
-            return MessageBox.Show("New") == MessageBoxResult.OK;
+            textEditor.Clear();
+            return true;
         }
 
         private bool OpenDocument()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Visual C# Files|*.cs|All Files|*.*";
+            dialog.Filter = "All Files|*.*";
             dialog.CheckFileExists = true;
             if (dialog.ShowDialog() ?? false)
             {
-                MainWindow.Instance.textEditor.Load(dialog.FileName);
-                MainWindow.Instance.textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(dialog.FileName));
+                currentFileName = dialog.FileName;
+                textEditor.Load(dialog.FileName);
+                string fileExtension = Path.GetExtension(dialog.FileName);
+                textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(fileExtension);
                 return true;
             }
             return false;
@@ -196,12 +181,48 @@
 
         private bool SaveDocument()
         {
-            return MessageBox.Show("Save") == MessageBoxResult.OK;
+            if (string.IsNullOrEmpty(currentFileName))
+            {
+                return SaveAsDocument();
+            }
+            textEditor.Save(currentFileName);
+            return true;
         }
 
         private bool SaveAsDocument()
         {
-            return MessageBox.Show("SaveAs") == MessageBoxResult.OK;
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "All Files|*.*";
+            if (dialog.ShowDialog() ?? false)
+            {
+                currentFileName = dialog.FileName;
+                textEditor.Save(currentFileName);
+                return true;
+            }
+            return false;
+        }
+
+        private bool PrepareClosing()
+        {
+            if (textEditor.IsModified)
+            {
+                string caption = "CaesarEditor";
+                string prompt = "Do you want to save changes?";
+                switch (MessageBox.Show(prompt, caption, MessageBoxButton.YesNoCancel, MessageBoxImage.Information))
+                {
+                    case MessageBoxResult.Yes: return SaveDocument();
+                    case MessageBoxResult.No: return true;
+                    case MessageBoxResult.Cancel: return false;
+                    default: return false;
+                }
+            }
+            return true;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !PrepareClosing();
+            base.OnClosing(e);
         }
     }
 }

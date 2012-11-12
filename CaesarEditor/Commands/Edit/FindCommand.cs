@@ -11,16 +11,11 @@ namespace CaesarEditor.Commands
     using System.Windows.Input;
 
     [ExportMainMenuCommand(Icon = "", Header = "_Find", Top = "_Edit", Category = "Find", Order = 207)]
-    public class FindCommand : ICommandEx
+    sealed class FindCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Find", typeof(FindCommand), new InputGestureCollection
-        {
-            new KeyGesture(Key.F, ModifierKeys.Control)
-        });
-
         public ICommand Command
         {
-            get { return command; }
+            get { return ApplicationCommands.Find; }
         }
 
         private ExecutedRoutedEventHandler executed = (s, e) =>

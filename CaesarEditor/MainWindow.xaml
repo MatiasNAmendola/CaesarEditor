@@ -8,7 +8,7 @@
         <!--<ToolBar Name="toolBar" DockPanel.Dock="Top"></ToolBar>-->
         <StatusBar Name="statusBar" DockPanel.Dock="Bottom" Height="24"></StatusBar>
         <Border Grid.Row="1" BorderThickness="0,1,0,1" BorderBrush="Gray">
-            <ae:TextEditor Name="textEditor" ShowLineNumbers="True" FontFamily="Consolas" FontSize="10pt"></ae:TextEditor>
+            <ae:TextEditor Name="textEditor" FontFamily="Consolas" FontSize="10pt"></ae:TextEditor>
         </Border>
     </DockPanel>
 </Window>

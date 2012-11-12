@@ -11,26 +11,16 @@ namespace CaesarEditor.Commands
     using System.Windows.Input;
 
     [ExportMainMenuCommand(Icon = "", Header = "_Paste", Top = "_Edit", Category = "Cut", Order = 205)]
-    public class PasteCommand : ICommandEx
+    sealed class PasteCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Paste", typeof(PasteCommand), new InputGestureCollection
-        {
-            new KeyGesture(Key.V, ModifierKeys.Control)
-        });
-
         public ICommand Command
         {
-            get { return command; }
+            get { return ApplicationCommands.Paste; }
         }
-
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.PasteCommandExecuted(s, e);
-        };
 
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return null; }
         }
     }
 }

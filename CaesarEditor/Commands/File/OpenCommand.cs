@@ -13,14 +13,9 @@ namespace CaesarEditor.Commands
     [ExportMainMenuCommand(Icon = "", Header = "_Open", Top = "_File", Category = "New", Order = 102)]
     sealed class OpenCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Open", typeof(OpenCommand), new InputGestureCollection
-        {
-            new KeyGesture(Key.O, ModifierKeys.Control)
-        });
-
         public ICommand Command
         {
-            get { return command; }
+            get { return ApplicationCommands.Open; }
         }
 
         private ExecutedRoutedEventHandler executed = (s, e) =>

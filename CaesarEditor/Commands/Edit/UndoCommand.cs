@@ -11,26 +11,16 @@ namespace CaesarEditor.Commands
     using System.Windows.Input;
 
     [ExportMainMenuCommand(Icon = "", Header = "_Undo", Top = "_Edit", Category = "Undo", Order = 201)]
-    public class UndoCommand : ICommandEx
+    sealed class UndoCommand : ICommandEx
     {
-        private ICommand command = new RoutedUICommand(string.Empty, "Undo", typeof(UndoCommand), new InputGestureCollection
-        {
-            new KeyGesture(Key.Z, ModifierKeys.Control)
-        });
-
         public ICommand Command
         {
-            get { return command; }
+            get { return ApplicationCommands.Undo; }
         }
-
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.UndoCommandExecuted(s, e);
-        };
 
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return null; }
         }
     }
 }

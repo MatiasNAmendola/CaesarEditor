@@ -1,26 +1,26 @@
 ﻿/*****************************************************************
- * File name: NewCommand.cs
+ * File name: ReplaceCommand.cs
  * Description:
  * Author: Paboo
  * Homepage: http://www.paboo.cn/
- * Date Created: 11/8/2012 11:25:37 AM
- * Date Updated: 11/8/2012 11:25:37 AM
+ * Date Created: 11/12/2012 1:05:57 PM
+ * Date Updated: 11/12/2012 1:05:57 PM
  *****************************************************************/
 namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_New", Top = "_File", Category = "New", Order = 101)]
-    sealed class NewCommand : ICommandEx
+    [ExportMainMenuCommand(Icon = "", Header = "_Replace", Top = "_Edit", Category = "Find", Order = 208)]
+    sealed class ReplaceCommand : ICommandEx
     {
         public ICommand Command
         {
-            get { return ApplicationCommands.New; }
+            get { return ApplicationCommands.Replace; }
         }
 
         private ExecutedRoutedEventHandler executed = (s, e) =>
         {
-            MainWindow.Instance.NewCommandExecuted(s, e);
+            MainWindow.Instance.ReplaceCommandExecuted(s, e);
         };
 
         public ExecutedRoutedEventHandler Executed
