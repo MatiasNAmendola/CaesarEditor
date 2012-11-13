@@ -10,7 +10,16 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Redo", Top = "_Edit", Category = "Undo", Order = 202)]
+    [ExportToolbarCommand(ToolIcon = "Images/Redo.png",
+                          ToolTip = "Redo",
+                          ToolCategory = "Undo",
+                          ToolOrder = 202)]
+    [ExportMainMenuCommand(MenuIcon = "Images/Redo.png",
+                           MenuHeader = "_Redo",
+                           IsEnabled = true,
+                           MenuTop = "_Edit",
+                           MenuCategory = "Undo",
+                           MenuOrder = 202)]
     sealed class RedoCommand : ICommandEx
     {
         public ICommand Command

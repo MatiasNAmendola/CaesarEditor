@@ -10,7 +10,16 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Paste", Top = "_Edit", Category = "Cut", Order = 205)]
+    [ExportToolbarCommand(ToolIcon = "Images/Paste.png",
+                          ToolTip = "Paste",
+                          ToolCategory = "Cut",
+                          ToolOrder = 205)]
+    [ExportMainMenuCommand(MenuIcon = "Images/Paste.png",
+                           MenuHeader = "_Paste",
+                           IsEnabled = true,
+                           MenuTop = "_Edit",
+                           MenuCategory = "Cut",
+                           MenuOrder = 205)]
     sealed class PasteCommand : ICommandEx
     {
         public ICommand Command

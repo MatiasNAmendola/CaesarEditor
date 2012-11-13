@@ -7,6 +7,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media.Imaging;
     using CaesarEditor.Commands;
     using ICSharpCode.AvalonEdit.Highlighting;
     using Microsoft.Win32;
@@ -17,6 +18,24 @@
     public partial class MainWindow : Window
     {
         private string currentFileName;
+
+        public string CurrentFileName
+        {
+            get { return this.currentFileName; }
+            private set
+            {
+                this.currentFileName = value;
+                this.Title = string.Format("{0} - {1}", value, "CaesarEditor");
+            }
+        }
+
+        private string currentFilePath;
+
+        public string CurrentFilePath
+        {
+            get { return this.currentFilePath; }
+            private set { this.currentFilePath = value; }
+        }
 
         private static MainWindow instance;
 
@@ -31,6 +50,8 @@
             InitializeComponent();
             App.CompositionContainer.ComposeParts(this);
             InitMainMenu();
+            InitToolbar();
+            NewDocument();
         }
 
         [ImportMany("MainMenuCommand", typeof(ICommandEx))]
@@ -39,7 +60,7 @@
         /// <summary> Initialize main menu </summary>
         private void InitMainMenu()
         {
-            foreach (var topGroup in mainMenuCommandCollection.OrderBy(c => c.Metadata.Order).GroupBy(c => c.Metadata.Top))
+            foreach (var topGroup in mainMenuCommandCollection.OrderBy(c => c.Metadata.MenuOrder).GroupBy(c => c.Metadata.MenuTop))
             {
                 var topMenuItem = mainMenu.Items.OfType<MenuItem>().FirstOrDefault(m => string.Equals((m.Header as string), topGroup.Key));
                 if (topMenuItem == null)
@@ -48,7 +69,7 @@
                     topMenuItem.Header = topGroup.Key;
                     mainMenu.Items.Add(topMenuItem);
                 }
-                foreach (var categoryGroup in topGroup.GroupBy(c => c.Metadata.Category))
+                foreach (var categoryGroup in topGroup.GroupBy(c => c.Metadata.MenuCategory))
                 {
                     if (topMenuItem.Items.Count > 0)
                     {
@@ -57,10 +78,11 @@
                     foreach (var entry in categoryGroup)
                     {
                         MenuItem menuItem = new MenuItem();
-                        if (!string.IsNullOrEmpty(entry.Metadata.Icon))
+                        if (!string.IsNullOrEmpty(entry.Metadata.MenuIcon))
                         {
+                            menuItem.Icon = LoadImage(entry.Metadata.MenuIcon);
                         }
-                        menuItem.Header = entry.Metadata.Header;
+                        menuItem.Header = entry.Metadata.MenuHeader;
                         menuItem.IsCheckable = entry.Metadata.IsCheckable;
                         menuItem.IsChecked = entry.Metadata.IsChecked;
                         menuItem.IsEnabled = entry.Metadata.IsEnabled;
@@ -73,6 +95,40 @@
                     }
                 }
             }
+        }
+
+        [ImportMany("ToolbarCommand", typeof(ICommandEx))]
+        private Lazy<ICommandEx, IToolbarCommandMetadata>[] toolbarCommandCollection = null;
+
+        /// <summary> Initialize toolbar </summary>
+        private void InitToolbar()
+        {
+            int pos = 0;
+            foreach (var commandGroup in toolbarCommandCollection.OrderBy(c => c.Metadata.ToolOrder).GroupBy(c => c.Metadata.ToolCategory))
+            {
+                foreach (var command in commandGroup)
+                {
+                    toolBar.Items.Insert(pos++, MakeToolbarItem(command));
+                }
+                toolBar.Items.Insert(pos++, new Separator());
+            }
+        }
+
+        private Button MakeToolbarItem(Lazy<ICommandEx, IToolbarCommandMetadata> command)
+        {
+            Button button = new Button();
+            button.ToolTip = command.Metadata.ToolTip;
+            button.Content = LoadImage(command.Metadata.ToolIcon);
+            button.Command = command.Value.Command;
+            return button;
+        }
+
+        private Image LoadImage(string icon)
+        {
+            Uri uri = new Uri("pack://application:,,,/" + icon);
+            BitmapImage image = new BitmapImage(uri);
+            image.Freeze();
+            return new Image { Width = 16, Height = 16, Source = image };
         }
 
         #region /// <summary> Main menu "File" </summary>
@@ -106,6 +162,12 @@
         {
             Close();
         }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !PrepareClosing();
+            base.OnClosing(e);
+        }
         #endregion
 
         #region /// <summary> Main menu "Edit" </summary>
@@ -138,7 +200,6 @@
 
         public void FontCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Font");
         }
         #endregion
 
@@ -146,11 +207,6 @@
         #endregion
 
         #region /// <summary> Main menu "Help" </summary>
-        public void HelpCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Help");
-        }
-
         public void AboutCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("About");
@@ -160,17 +216,26 @@
         private bool NewDocument()
         {
             textEditor.Clear();
+            CurrentFileName = "Untitled";
+            CurrentFilePath = "";
+            textEditor.IsModified = false;
             return true;
         }
 
         private bool OpenDocument()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All Files|*.*";
+            dialog.Filter = "Visual C# Files|*.cs"
+                         + "|Web Files|*.htm;*.html"
+                         + "|IL Files|*.il"
+                         + "|Script Files|*.js"
+                         + "|Text Files|*.txt"
+                         + "|All Files|*.*";
             dialog.CheckFileExists = true;
             if (dialog.ShowDialog() ?? false)
             {
-                currentFileName = dialog.FileName;
+                CurrentFileName = dialog.SafeFileName;
+                CurrentFilePath = dialog.FileName;
                 textEditor.Load(dialog.FileName);
                 string fileExtension = Path.GetExtension(dialog.FileName);
                 textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(fileExtension);
@@ -181,7 +246,7 @@
 
         private bool SaveDocument()
         {
-            if (string.IsNullOrEmpty(currentFileName))
+            if (string.IsNullOrEmpty(currentFilePath))
             {
                 return SaveAsDocument();
             }
@@ -195,7 +260,8 @@
             dialog.Filter = "All Files|*.*";
             if (dialog.ShowDialog() ?? false)
             {
-                currentFileName = dialog.FileName;
+                CurrentFileName = dialog.SafeFileName;
+                CurrentFilePath = dialog.FileName;
                 textEditor.Save(currentFileName);
                 return true;
             }
@@ -219,10 +285,6 @@
             return true;
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = !PrepareClosing();
-            base.OnClosing(e);
-        }
+
     }
 }

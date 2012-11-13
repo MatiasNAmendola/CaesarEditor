@@ -10,7 +10,16 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "De_lete", Top = "_Edit", Category = "Cut", Order = 206)]
+    [ExportToolbarCommand(ToolIcon = "Images/Delete.png",
+                          ToolTip = "Delete",
+                          ToolCategory = "Cut",
+                          ToolOrder = 206)]
+    [ExportMainMenuCommand(MenuIcon = "Images/Delete.png",
+                           MenuHeader = "De_lete",
+                           IsEnabled = true,
+                           MenuTop = "_Edit",
+                           MenuCategory = "Cut",
+                           MenuOrder = 206)]
     sealed class DeleteCommand : ICommandEx
     {
         public ICommand Command

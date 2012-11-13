@@ -27,14 +27,14 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 			hlm.RegisterHighlighting("HTML", new[] { ".htm", ".html" }, "HTML-Mode.xshd");
 			hlm.RegisterHighlighting("ASP/XHTML", new[] { ".asp", ".aspx", ".asax", ".asmx", ".ascx", ".master" }, "ASPX.xshd");
 			
-			hlm.RegisterHighlighting("Boo", new[] { ".boo" }, "Boo.xshd");
-			hlm.RegisterHighlighting("Coco", new[] { ".atg" }, "Coco-Mode.xshd");
+			//hlm.RegisterHighlighting("Boo", new[] { ".boo" }, "Boo.xshd");
+			//hlm.RegisterHighlighting("Coco", new[] { ".atg" }, "Coco-Mode.xshd");
 			hlm.RegisterHighlighting("CSS", new[] { ".css" }, "CSS-Mode.xshd");
 			hlm.RegisterHighlighting("C++", new[] { ".c", ".h", ".cc", ".cpp" , ".hpp" }, "CPP-Mode.xshd");
 			hlm.RegisterHighlighting("Java", new[] { ".java" }, "Java-Mode.xshd");
-			hlm.RegisterHighlighting("Patch", new[] { ".patch", ".diff" }, "Patch-Mode.xshd");
+			//hlm.RegisterHighlighting("Patch", new[] { ".patch", ".diff" }, "Patch-Mode.xshd");
 			hlm.RegisterHighlighting("PHP", new[] { ".php" }, "PHP-Mode.xshd");
-			hlm.RegisterHighlighting("TeX", new[] { ".tex" }, "Tex-Mode.xshd");
+			//hlm.RegisterHighlighting("TeX", new[] { ".tex" }, "Tex-Mode.xshd");
 			hlm.RegisterHighlighting("VBNET", new[] { ".vb" }, "VBNET-Mode.xshd");
 			hlm.RegisterHighlighting("XML", (".xml;.xsl;.xslt;.xsd;.manifest;.config;.addin;" +
 			                                 ".xshd;.wxs;.wxi;.wxl;.proj;.csproj;.vbproj;.ilproj;" +

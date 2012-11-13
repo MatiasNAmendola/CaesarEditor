@@ -10,7 +10,12 @@ namespace CaesarEditor.Commands.Edit
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Go to", Top = "_Edit", Category = "Find", Order = 209)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "_Go to",
+                           IsEnabled = true,
+                           MenuTop = "_Edit",
+                           MenuCategory = "Find",
+                           MenuOrder = 209)]
     sealed class GotoCommand : ICommandEx
     {
         private ICommand command = new RoutedUICommand(string.Empty, "Goto", typeof(GotoCommand), new InputGestureCollection

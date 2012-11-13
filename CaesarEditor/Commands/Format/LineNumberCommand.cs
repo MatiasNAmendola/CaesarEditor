@@ -10,7 +10,14 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Line Number", IsCheckable = true, Top = "_Format", Category = "LineNumber", Order = 301)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "_Line Number",
+                           IsCheckable = true,
+                           IsChecked = true,
+                           IsEnabled = true,
+                           MenuTop = "_Format",
+                           MenuCategory = "LineNumber",
+                           MenuOrder = 301)]
     sealed class LineNumberCommand : ICommandEx
     {
         private ICommand command = new RoutedUICommand(string.Empty, "LineNumber", typeof(LineNumberCommand), new InputGestureCollection

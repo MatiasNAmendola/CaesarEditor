@@ -10,7 +10,14 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Word Wrap", IsCheckable = true, Top = "_Format", Category = "LineNumber", Order = 302)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "_Word Wrap",
+                           IsCheckable = true,
+                           IsChecked = true,
+                           IsEnabled = true,
+                           MenuTop = "_Format",
+                           MenuCategory = "LineNumber",
+                           MenuOrder = 302)]
     sealed class WordWrapCommand : ICommandEx
     {
         private ICommand command = new RoutedUICommand(string.Empty, "WordWrap", typeof(WordWrapCommand), new InputGestureCollection

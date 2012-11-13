@@ -132,6 +132,7 @@ namespace ICSharpCode.AvalonEdit.Highlighting
 		public ReadOnlyCollection<IHighlightingDefinition> HighlightingDefinitions {
 			get {
 				lock (lockObj) {
+					allHighlightings.Sort((x, y) => string.CompareOrdinal(x.Name, y.Name));
 					return Array.AsReadOnly(allHighlightings.ToArray());
 				}
 			}

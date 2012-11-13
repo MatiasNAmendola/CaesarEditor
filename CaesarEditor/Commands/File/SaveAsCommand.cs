@@ -10,7 +10,12 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "Save _As", Top = "_File", Category = "New", Order = 104)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "Save _As",
+                           IsEnabled = true,
+                           MenuTop = "_File",
+                           MenuCategory = "New",
+                           MenuOrder = 104)]
     sealed class SaveAsCommand : ICommandEx
     {
         private ICommand command = new RoutedUICommand(string.Empty, "SaveAs", typeof(SaveAsCommand), new InputGestureCollection

@@ -10,7 +10,12 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Font", Top = "_Format", Category = "LineNumber", Order = 303)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "_Font",
+                           IsEnabled = false,
+                           MenuTop = "_Format",
+                           MenuCategory = "LineNumber",
+                           MenuOrder = 303)]
     sealed class FontCommand : ICommandEx
     {
         private ICommand command = new RoutedUICommand(string.Empty, "Font", typeof(FontCommand), new InputGestureCollection

@@ -13,49 +13,43 @@ namespace CaesarEditor.Commands
 
     public interface IMainMenuCommandMetadata
     {
-        string Icon { get; }
-        string Header { get; }
+        string MenuIcon { get; }
+        string MenuHeader { get; }
         bool IsCheckable { get; }
         bool IsChecked { get; }
         bool IsEnabled { get; }
 
-        string Top { get; }
-        string Category { get; }
-        double Order { get; }
+        string MenuTop { get; }
+        string MenuCategory { get; }
+        double MenuOrder { get; }
     }
 
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class ExportMainMenuCommandAttribute : ExportAttribute, IMainMenuCommandMetadata
     {
-        private bool isEnabled = true;
-
         public ExportMainMenuCommandAttribute()
             : base("MainMenuCommand", typeof(ICommandEx))
         {
         }
 
-        public string Icon { get; set; }
-        public string Header { get; set; }
+        public string MenuIcon { get; set; }
+        public string MenuHeader { get; set; }
         public bool IsCheckable { get; set; }
         public bool IsChecked { get; set; }
-        public bool IsEnabled
-        {
-            get { return isEnabled; }
-            set { isEnabled = value; }
-        }
+        public bool IsEnabled { get; set; }
 
-        public string Top { get; set; }
-        public string Category { get; set; }
-        public double Order { get; set; }
+        public string MenuTop { get; set; }
+        public string MenuCategory { get; set; }
+        public double MenuOrder { get; set; }
     }
 
     public interface IToolbarCommandMetadata
     {
-        string Icon { get; }
+        string ToolIcon { get; }
         string ToolTip { get; }
-        string Category { get; }
-        double Order { get; }
+        string ToolCategory { get; }
+        double ToolOrder { get; }
     }
 
     [MetadataAttribute]
@@ -67,9 +61,9 @@ namespace CaesarEditor.Commands
         {
         }
 
-        public string Icon { get; set; }
+        public string ToolIcon { get; set; }
         public string ToolTip { get; set; }
-        public string Category { get; set; }
-        public double Order { get; set; }
+        public string ToolCategory { get; set; }
+        public double ToolOrder { get; set; }
     }
 }

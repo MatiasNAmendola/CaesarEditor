@@ -10,7 +10,12 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(Icon = "", Header = "_Replace", Top = "_Edit", Category = "Find", Order = 208)]
+    [ExportMainMenuCommand(MenuIcon = "",
+                           MenuHeader = "_Replace",
+                           IsEnabled = true,
+                           MenuTop = "_Edit",
+                           MenuCategory = "Find",
+                           MenuOrder = 208)]
     sealed class ReplaceCommand : ICommandEx
     {
         public ICommand Command

@@ -1,36 +1,31 @@
 ﻿/*****************************************************************
- * File name: FindCommand.cs
+ * File name: SelectAllCommand.cs
  * Description:
  * Author: Paboo
  * Homepage: http://www.paboo.cn/
- * Date Created: 11/9/2012 10:09:36 AM
- * Date Updated: 11/9/2012 10:09:36 AM
+ * Date Created: 11/13/2012 9:23:44 AM
+ * Date Updated: 11/13/2012 9:23:44 AM
  *****************************************************************/
 namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
     [ExportMainMenuCommand(MenuIcon = "",
-                           MenuHeader = "_Find",
+                           MenuHeader = "Select _All",
                            IsEnabled = true,
                            MenuTop = "_Edit",
-                           MenuCategory = "Find",
-                           MenuOrder = 207)]
-    sealed class FindCommand : ICommandEx
+                           MenuCategory = "SelectAll",
+                           MenuOrder = 210)]
+    sealed class SelectAllCommand : ICommandEx
     {
         public ICommand Command
         {
-            get { return ApplicationCommands.Find; }
+            get { return ApplicationCommands.SelectAll; }
         }
-
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.FindCommandExecuted(s, e);
-        };
 
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return null; }
         }
     }
 }
