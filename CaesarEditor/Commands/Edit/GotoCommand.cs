@@ -10,7 +10,7 @@ namespace CaesarEditor.Commands.Edit
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(MenuIcon = "",
+    [ExportMainMenuCommand(MenuIcon = "Images/Goto.png",
                            MenuHeader = "_Go to",
                            IsEnabled = true,
                            MenuTop = "_Edit",
@@ -28,14 +28,9 @@ namespace CaesarEditor.Commands.Edit
             get { return command; }
         }
 
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.GotoCommandExecuted(s, e);
-        };
-
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return MainWindow.Instance.GotoCommandExecuted; }
         }
     }
 }

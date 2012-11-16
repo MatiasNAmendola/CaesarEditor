@@ -10,7 +10,7 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(MenuIcon = "",
+    [ExportMainMenuCommand(MenuIcon = "Images/SaveAs.png",
                            MenuHeader = "Save _As",
                            IsEnabled = true,
                            MenuTop = "_File",
@@ -27,14 +27,9 @@ namespace CaesarEditor.Commands
             get { return command; }
         }
 
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.SaveAsCommandExecuted(s, e);
-        };
-
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return MainWindow.Instance.SaveAsCommandExecuted; }
         }
     }
 }

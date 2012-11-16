@@ -127,21 +127,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Open.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\New.png" />
+    <Resource Include="Images\Open.png" />
     <Resource Include="Images\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Redo.png" />
+    <Resource Include="Images\SaveAs.png" />
     <Resource Include="Images\Undo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Redo.png" />
     <Resource Include="Images\Cut.png" />
-    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Paste.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Find.png" />
+    <Resource Include="Images\Replace.png" />
+    <Resource Include="Images\Goto.png" />
+  </ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

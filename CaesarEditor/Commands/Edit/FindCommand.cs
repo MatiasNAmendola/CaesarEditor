@@ -10,7 +10,7 @@ namespace CaesarEditor.Commands
 {
     using System.Windows.Input;
 
-    [ExportMainMenuCommand(MenuIcon = "",
+    [ExportMainMenuCommand(MenuIcon = "Images/Find.png",
                            MenuHeader = "_Find",
                            IsEnabled = true,
                            MenuTop = "_Edit",
@@ -23,14 +23,9 @@ namespace CaesarEditor.Commands
             get { return ApplicationCommands.Find; }
         }
 
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.FindCommandExecuted(s, e);
-        };
-
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return null; }
         }
     }
 }

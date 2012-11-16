@@ -27,14 +27,9 @@ namespace CaesarEditor.Commands
             get { return ApplicationCommands.Save; }
         }
 
-        private ExecutedRoutedEventHandler executed = (s, e) =>
-        {
-            MainWindow.Instance.SaveCommandExecuted(s, e);
-        };
-
         public ExecutedRoutedEventHandler Executed
         {
-            get { return executed; }
+            get { return MainWindow.Instance.SaveCommandExecuted; }
         }
     }
 }

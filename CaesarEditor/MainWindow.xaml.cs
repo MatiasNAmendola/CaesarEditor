@@ -10,6 +10,7 @@
     using System.Windows.Media.Imaging;
     using CaesarEditor.Commands;
     using ICSharpCode.AvalonEdit.Highlighting;
+    using ICSharpCode.AvalonEdit.Search;
     using Microsoft.Win32;
 
     /// <summary>
@@ -49,6 +50,7 @@
             instance = this;
             InitializeComponent();
             App.CompositionContainer.ComposeParts(this);
+            textEditor.TextArea.DefaultInputHandler.NestedInputHandlers.Add(new SearchInputHandler(textEditor.TextArea));
             InitMainMenu();
             InitToolbar();
             NewDocument();
@@ -171,16 +173,6 @@
         #endregion
 
         #region /// <summary> Main menu "Edit" </summary>
-        public void FindCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Find");
-        }
-
-        public void ReplaceCommandExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Replace");
-        }
-
         public void GotoCommandExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("Goto");
@@ -250,7 +242,7 @@
             {
                 return SaveAsDocument();
             }
-            textEditor.Save(currentFileName);
+            textEditor.Save(currentFilePath);
             return true;
         }
 
@@ -284,7 +276,5 @@
             }
             return true;
         }
-
-
     }
 }
